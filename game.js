@@ -61,6 +61,8 @@ class Island1 extends AdventureScene {
                 if(this.hasItem("rock")){
                     this.showMessage("You pick up the logs.");
                     this.gainItem('logs');
+                    this.loseItem('rock');
+                    this.showMessage("cutting down the tree broke the rock, and put it into an unusable state");
                     if(this.createRaft()){
                         this.tweens.add({
                             targets: raft,
@@ -149,7 +151,19 @@ class Ocean extends AdventureScene {
     onEnter(){
         if(!this.hasItem('oar')){
             this.showMessage("You're drifting away, to an island. Get an oar and you can choose");
-            this.gotoScene('island2');
+            this.gotoScene('island1');
+        }
+        if(this.hasItem('compass')){
+            let home = this.add.text(this.w * 0.5, this.w * 0.1, "🏠 Civilization")
+                .setFontSize(this.s * 2)
+                .setInteractive()
+                .on('pointerover', () => {
+                    this.showMessage("What seems like a far away place. But a very familiar place at that.");
+                })
+                .on('pointerdown', () => {
+                    this.showMessage("you started rowing towards Civilization");    
+                    this.gotoScene('home');
+                })
         }
         let raft = this.add.text(this.w * 0.3, this.w * 0.3, "🛶 raft") 
             .setFontSize(this.s *2)
@@ -171,7 +185,7 @@ class Ocean extends AdventureScene {
             })
             .on('pointerdown', () => {
                 this.showMessage("you started rowing to an island in the distance");    
-                this.gotoScene('Island2');
+                this.gotoScene('island2');
             })
         let islandSprite2 = this.add.text(this.w* 0.1, this.w * 0.5 , "🏝️ Island 2")
             .setFontSize(this.s *2)
@@ -181,7 +195,7 @@ class Ocean extends AdventureScene {
             })
             .on('pointerdown', () => {
                 this.showMessage("you started rowing to an island in the distance");    
-                this.gotoScene('Island3');
+                this.gotoScene('island3');
             })
     }
 }
@@ -191,7 +205,8 @@ class Island2 extends AdventureScene {
         super('island2');
     }
     onEnter(){
-        let oar = this.add.text(this.w * 0.1, this.w * 0.25, "🥄 oar")
+        if(!this.hasItem('oar')){
+            let oar = this.add.text(this.w * 0.1, this.w * 0.25, "🥄 oar")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
@@ -235,6 +250,54 @@ class Island2 extends AdventureScene {
                     onComplete: () => wood.destroy()
                 }); 
             })
+        }
+        let raft = this.add.text(this.w * 0.1, this.w * 0.2, "🛶 raft") 
+            .setFontSize(this.s *2)
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("A crafted raft made from wood, keeping you from the ocean. Use it to adventure to another island.");
+            })
+            .on('pointerdown', () => {
+                this.showMessage("You sail off the island back into the ocean");
+                this.gotoScene('ocean');
+            })
+        if(!this.hasItem('compass')){
+            let compass = this.add.text(this.w * 0.2, this.w * 0.3, "🧭 compass")
+                .setFontSize(this.s* 2)
+                .setInteractive()
+                .on('pointerover', () => {
+                    this.showMessage("A still working compass found in the sand. Maybe this could be used to go back to civilization");
+                })
+                .on('pointerdown', () => {
+                    this.showMessage("A compass is now in your possesion. Maybe I could find my way home now.");
+                    this.gainItem('compass');
+                    this.tweens.add({
+                        targets: compass,
+                        y: `-=${2 * this.s}`,
+                        alpha: { from: 1, to: 0 },
+                        duration: 500,
+                        onComplete: () => compass.destroy()
+                    }); 
+                })
+        }
+        let shell1 = this.add.text(this.w * 0.2, this.w * 0.5, "🐚 shell")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("A few shells are scattered across the island you are on");
+            })
+            .on('pointerdown', () => {
+                this.showMessage("you grabbed some shells I wonder what these are for");
+                this.gainShell();
+                //this.gainItem('shell');
+                this.tweens.add({
+                    targets: shell1,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                    onComplete: () => shell1.destroy()
+                })
+            })
     }
 }
 
@@ -242,11 +305,81 @@ class Island3 extends AdventureScene {
     constructor(){
         super('island3');
     }
-    create(){
-
-    }
     onEnter(){
-
+        if(!this.hasItem('oar')){
+            let oar = this.add.text(this.w * 0.1, this.w * 0.25, "🥄 oar")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("an oar used to steer a boat");
+            })
+            .on('pointerdown', () => {
+                this.showMessage("You picked up the oar");
+                this.gainItem('oar');
+                this.tweens.add({
+                    targets: oar,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                    onComplete: () => oar.destroy()
+                })
+            })
+            this.tweens.add({
+                targets: oar,
+                alpha: { from: 1, to: 0 },
+            })
+            let wood = this.add.text(this.w * 0.5, this.w * 0.1, "🪵 wood")
+                .setFontSize(this.s * 2)
+                .setInteractive()
+                .on('pointerover', () => {
+                    this.showMessage("Some logs found on the beach these seem helpful");
+                })
+                .on('pointerdown', () => {
+                    this.showMessage("You pick up the wood and immediately turned it into a makeshift oar");
+                    this.gainItem('wood');
+                    if(this.createOar()){
+                        this.tweens.add({
+                            targets: oar,
+                            alpha: { from: 0, to: 1 },
+                        }); 
+                    }
+                    this.tweens.add({
+                        targets: wood,
+                        y: `-=${2 * this.s}`,
+                        alpha: { from: 1, to: 0 },
+                        duration: 500,
+                        onComplete: () => wood.destroy()
+                    }); 
+                })
+            }
+        let raft = this.add.text(this.w * 0.1, this.w * 0.2, "🛶 raft") 
+            .setFontSize(this.s *2)
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("A crafted raft made from wood, keeping you from the ocean. Use it to adventure to another island.");
+            })
+            .on('pointerdown', () => {
+                this.showMessage("You sail off the island back into the ocean");
+                this.gotoScene('ocean');
+            })
+        let shell1 = this.add.text(this.w * 0.2, this.w * 0.5, "🐚 shell")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("A few shells are scattered across the island you are on");
+            })
+            .on('pointerdown', () => {
+                this.showMessage("you grabbed some shells I wonder what these are for");
+                this.gainShell();
+                //this.gainItem('shell');
+                this.tweens.add({
+                    targets: shell1,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                    onComplete: () => shell1.destroy()
+                })
+            })
     }
 }
 
@@ -275,6 +408,18 @@ class Outro extends Phaser.Scene {
     }
 }
 
+class Home extends Phaser.Scene {
+    constructor() {
+        super('home');
+    }
+    create(){
+        this.add.text(50, 50, "That's all!").setFontSize(50);
+        this.add.text(50, 150, "Click anywhere to restart.").setFontSize(20);
+        this.add.text(50, 100, "Welcome Home").setFontSize(50);
+        this.input.on('pointerdown', () => this.scene.start('intro'));
+    }
+}
+
 
 const game = new Phaser.Game({
     scale: {
@@ -284,6 +429,6 @@ const game = new Phaser.Game({
         height: 1080
     },
     backgroundColor: '#1cb2f5', 
-    scene: [Intro, Island1, Ocean, Island2, Island3, Demo2, Outro],
+    scene: [Intro, Island1, Ocean, Island2, Island3, Demo2, Outro, Home],
     title: "Adventure Game",
 });
