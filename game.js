@@ -135,7 +135,7 @@ class Ocean extends AdventureScene {
             this.gotoScene('island3');
         }
         if(this.hasItem('compass')){
-            let home = this.add.text(this.w * 0.5, this.w * 0.1, "🏠 Civilization")
+            let home = this.add.text(this.w * 0.5, this.w * 0.1, "🏘️ Civilization")
                 .setFontSize(this.s * 2)
                 .setInteractive()
                 .on('pointerover', () => {
@@ -208,7 +208,7 @@ class Island2 extends AdventureScene {
                 targets: oar,
                 alpha: { from: 1, to: 0 },
             })
-        let wood = this.add.text(this.w * 0.5, this.w * 0.1, "🪵 wood")
+        let wood = this.add.text(this.w * 0.5, this.w * 0.1, "🌳 wood")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
@@ -384,7 +384,7 @@ class Island3 extends AdventureScene {
                     onComplete: () => shell1.destroy()
                 })
             })
-        let hut = this.add.text(this.w * 0.4, this.w * 0.1, "🛖 hut")
+        let hut = this.add.text(this.w * 0.4, this.w * 0.1, "🏠 hut")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
