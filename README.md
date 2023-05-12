@@ -4,6 +4,7 @@ Asset sources:
 All assets that were used were simply from the windows + . menu of windows which gives access to the emoji menu.
 
 New Mechanics:
+
     Crafting: I made a system which is pretty basic, but very crucial to the function of the game. When you have specific crafting components in your inventory it will automatically create a new item on the ground.
 
     Shell Counting: I made a mechanic where every island contains shells and every shell you find can be collected. And every time that you go to an old island a new shell appears almost like a tracker of how many times you've traveled. I decided to also only have the shells have an animation to separate the optional counter item with the required progression items.
