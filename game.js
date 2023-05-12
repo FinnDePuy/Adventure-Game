@@ -151,7 +151,7 @@ class Ocean extends AdventureScene {
     onEnter(){
         if(!this.hasItem('oar')){
             this.showMessage("You're drifting away, to an island. Get an oar and you can choose");
-            this.gotoScene('island1');
+            this.gotoScene('island3');
         }
         if(this.hasItem('compass')){
             let home = this.add.text(this.w * 0.5, this.w * 0.1, "🏠 Civilization")
@@ -371,7 +371,6 @@ class Island3 extends AdventureScene {
             .on('pointerdown', () => {
                 this.showMessage("you grabbed some shells I wonder what these are for");
                 this.gainShell();
-                //this.gainItem('shell');
                 this.tweens.add({
                     targets: shell1,
                     y: `-=${2 * this.s}`,
@@ -379,6 +378,16 @@ class Island3 extends AdventureScene {
                     duration: 500,
                     onComplete: () => shell1.destroy()
                 })
+            })
+        let hut = this.add.text(this.w * 0.4, this.w * 0.1, "🛖 hut")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("An abandoned hut on the beach, I could really use a rest");
+            })
+            .on('pointerdown', () => {
+                this.showMessage("You go into the hut and rest on the floor");
+                this.gotoScene('outro');
             })
     }
 }
@@ -403,7 +412,8 @@ class Outro extends Phaser.Scene {
     }
     create() {
         this.add.text(50, 50, "That's all!").setFontSize(50);
-        this.add.text(50, 100, "Click anywhere to restart.").setFontSize(20);
+        this.add.text(50, 100, "You sleep in the hut and realize its comfort is good enough to \nsurvive. The hut has a desalination kit and farming equipment. \nSet for a little while longer.").setFontSize(50);
+        this.add.text(50, 250, "Click anywhere to restart.").setFontSize(20);
         this.input.on('pointerdown', () => this.scene.start('intro'));
     }
 }
@@ -415,7 +425,7 @@ class Home extends Phaser.Scene {
     create(){
         this.add.text(50, 50, "That's all!").setFontSize(50);
         this.add.text(50, 150, "Click anywhere to restart.").setFontSize(20);
-        this.add.text(50, 100, "Welcome Home").setFontSize(50);
+        this.add.text(50, 100, "Welcome Home. I'm sure you'll be reunited with your family soon.").setFontSize(40);
         this.input.on('pointerdown', () => this.scene.start('intro'));
     }
 }
