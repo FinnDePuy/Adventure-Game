@@ -1,34 +1,3 @@
-class Demo2 extends AdventureScene {
-    constructor() {
-        super("demo2", "The second room has a long name (it truly does).");
-    }
-    onEnter() {
-        this.add.text(this.w * 0.3, this.w * 0.4, "just go back")
-            .setFontSize(this.s * 2)
-            .setInteractive()
-            .on('pointerover', () => {
-                this.showMessage("You've got no other choice, really.");
-            })
-            .on('pointerdown', () => {
-                this.gotoScene('demo1');
-            });
-
-        let finish = this.add.text(this.w * 0.6, this.w * 0.2, '(finish the game)')
-            .setInteractive()
-            .on('pointerover', () => {
-                this.showMessage('*giggles*');
-                this.tweens.add({
-                    targets: finish,
-                    x: this.s + (this.h - 2 * this.s) * Math.random(),
-                    y: this.s + (this.h - 2 * this.s) * Math.random(),
-                    ease: 'Sine.inOut',
-                    duration: 500
-                });
-            })
-            .on('pointerdown', () => this.gotoScene('outro'));
-    }
-}
-
 class Island1 extends AdventureScene {
     constructor(){
         super('island1');
@@ -86,6 +55,18 @@ class Island1 extends AdventureScene {
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("A few shells are scattered across the island you are on");
+                this.tweens.add({
+                    targets:shell1,
+                    x: `-=${1* this.s}`,
+                    duration: 100
+                })
+            })
+            .on('pointerout', () => {
+                this.tweens.add({
+                    targets: shell1,
+                    x: `-=${-1 * this.s}`,
+                    duration: 100
+                })
             })
             .on('pointerdown', () => {
                 this.showMessage("you grabbed some shells I wonder what these are for");
@@ -285,6 +266,18 @@ class Island2 extends AdventureScene {
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("A few shells are scattered across the island you are on");
+                this.tweens.add({
+                    targets:shell1,
+                    x: `-=${1* this.s}`,
+                    duration: 100
+                })
+            })
+            .on('pointerout', () => {
+                this.tweens.add({
+                    targets: shell1,
+                    x: `-=${-1 * this.s}`,
+                    duration: 100
+                })
             })
             .on('pointerdown', () => {
                 this.showMessage("you grabbed some shells I wonder what these are for");
@@ -367,6 +360,18 @@ class Island3 extends AdventureScene {
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("A few shells are scattered across the island you are on");
+                this.tweens.add({
+                    targets:shell1,
+                    x: `-=${1* this.s}`,
+                    duration: 100
+                })
+            })
+            .on('pointerout', () => {
+                this.tweens.add({
+                    targets: shell1,
+                    x: `-=${-1 * this.s}`,
+                    duration: 100
+                })
             })
             .on('pointerdown', () => {
                 this.showMessage("you grabbed some shells I wonder what these are for");
@@ -439,6 +444,6 @@ const game = new Phaser.Game({
         height: 1080
     },
     backgroundColor: '#1cb2f5', 
-    scene: [Intro, Island1, Ocean, Island2, Island3, Demo2, Outro, Home],
+    scene: [Intro, Island1, Ocean, Island2, Island3, Outro, Home],
     title: "Adventure Game",
 });
