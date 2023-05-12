@@ -2,7 +2,7 @@ class AdventureScene extends Phaser.Scene {
 
     init(data) {
         this.inventory = data.inventory || [];
-        this.shell = data.shell || 0;
+        this.shellcount = data.shellcount || 0;
     }
 
     constructor(key, name) {
@@ -50,6 +50,12 @@ class AdventureScene extends Phaser.Scene {
                 }
             });
 
+        this.add.text(this.w-20*this.s, this.h-3*this.s, "🐚shells: ")
+            .setStyle({fontSize: `${2 * this.s}px` })
+
+        this.shellText = this.add.text(this.w-8*this.s, this.h-3*this.s)
+            .setStyle({fontSize: `${2 * this.s}px` })
+            .setText(this.shellcount)
         this.onEnter();
 
     }
@@ -96,6 +102,7 @@ class AdventureScene extends Phaser.Scene {
         return this.inventory.includes(item);
     }
 
+
     gainItem(item) {
         if (this.inventory.includes(item)) {
             console.warn('gaining item already held:', item);
@@ -114,6 +121,12 @@ class AdventureScene extends Phaser.Scene {
                 });
             }
         }
+    }
+
+    gainShell(){
+        this.shellcount++;
+        this.shellText
+            .setText(this.shellcount);
     }
 
     //new method from me
@@ -160,7 +173,8 @@ class AdventureScene extends Phaser.Scene {
     gotoScene(key) {
         this.cameras.main.fade(this.transitionDuration, 0, 0, 0);
         this.time.delayedCall(this.transitionDuration, () => {
-            this.scene.start(key, { inventory: this.inventory });
+            this.scene.start(key, { inventory: this.inventory, shellcount: this.shellcount });
+
         });
     }
 
