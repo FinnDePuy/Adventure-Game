@@ -208,11 +208,11 @@ class Island2 extends AdventureScene {
                 targets: oar,
                 alpha: { from: 1, to: 0 },
             })
-        let wood = this.add.text(this.w * 0.5, this.w * 0.1, "🌳 wood")
+        let wood = this.add.text(this.w * 0.5, this.w * 0.1, "🪓 wood")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
-                this.showMessage("Some logs found on the beach these seem helpful");
+                this.showMessage("A tree with an axe chained to the ground next to it");
             })
             .on('pointerdown', () => {
                 this.showMessage("You pick up the wood and immediately turned it into a makeshift oar");
