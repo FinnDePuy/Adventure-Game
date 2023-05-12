@@ -3,7 +3,7 @@ class Island1 extends AdventureScene {
         super('island1');
     }
     onEnter(){
-        let rock = this.add.text(this.w * 0.5, this.w * 0.3, "🪨 a very sharp rock")
+        let rock = this.add.text(this.w * 0.5, this.w * 0.3, "⛰️ sharp rock")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
@@ -80,7 +80,7 @@ class Island1 extends AdventureScene {
                     onComplete: () => shell1.destroy()
                 })
             })
-        let rope = this.add.text(this.w * 0.24, this.w * 0.3, "🪢 rope")
+        let rope = this.add.text(this.w * 0.24, this.w * 0.3, "🧵 rope")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
